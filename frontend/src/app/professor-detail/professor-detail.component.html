@@ -1,0 +1,149 @@
+<app-header></app-header>
+<app-sub-header [title]="professor.full_name" [url]="router.url"></app-sub-header>
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <div class="professor-avatar">
+        <img src="{{professor.avatar}}">
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="professor-info">
+        <h4 *ngIf="professor.universities.length"> Университеты: </h4>
+        <ul class="professor-info-list" >
+          <li *ngFor="let university of professor.universities">✪ {{university.abbreviation}}</li>
+        </ul>
+        <h4 *ngIf="professor.subjects.length"> Предметы: </h4>
+        <ul class="professor-info-list" >
+          <li *ngFor="let subject of professor.subjects">📚 {{subject.abbreviation}}</li>
+        </ul>
+      </div>
+    </div>
+      <div class="col-6">
+        <span class="heading">Статистика отзывов</span>
+        <span *ngFor="let star of range(ratings.average)" class="fa fa-star checked"></span>
+        <span *ngFor="let missed of range(5-ratings.average)" class="fa fa-star"></span>
+        <p>Cредняя оценка - {{ratings.average}} основанная на {{ratings.total}} отзывов</p>
+        <hr style="border:3px solid #f1f1f1">
+        <div class="side">
+        <div>5 звезд</div>
+      </div>
+      <div class="middle">
+        <div class="bar-container">
+          <div class="bar-5" style="--width:{{statsReviews(ratings.total, ratings.fives)}}%"></div>
+        </div>
+      </div>
+      <div class="side right">
+        <div>{{ratings.fives}}</div>
+      </div>
+      <div class="side">
+        <div>4 звезды</div>
+      </div>
+      <div class="middle">
+        <div class="bar-container">
+          <div class="bar-4" style="--width:{{statsReviews(ratings.total, ratings.fours)}}%"></div>
+        </div>
+      </div>
+      <div class="side right">
+        <div>{{ratings.fours}}</div>
+      </div>
+      <div class="side">
+        <div>3 звезды</div>
+      </div>
+      <div class="middle">
+        <div class="bar-container">
+          <div class="bar-3" style="--width:{{statsReviews(ratings.total, ratings.threes)}}%"></div>
+        </div>
+      </div>
+      <div class="side right">
+        <div>{{ratings.threes}}</div>
+      </div>
+      <div class="side">
+        <div>2 звезды</div>
+      </div>
+      <div class="middle">
+        <div class="bar-container">
+          <div class="bar-2" style="--width:{{statsReviews(ratings.total, ratings.twos)}}%"></div>
+        </div>
+      </div>
+      <div class="side right">
+        <div>{{ratings.twos}}</div>
+      </div>
+      <div class="side">
+        <div>1 звезда</div>
+      </div>
+      <div class="middle">
+        <div class="bar-container">
+          <div class="bar-1" style="--width:{{statsReviews(ratings.total, ratings.ones)}}%"></div>
+        </div>
+      </div>
+      <div class="side right">
+        <div>{{ratings.ones}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 offset-lg-1 col-lg-1">
+      <div class="post-share">
+        <ul class="flex flex-wrap align-items-center p-0 m-0">
+          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+          <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+          <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+          <li><a href="#"><i class="fa fa-thumb-tack"></i></a></li>
+        </ul>
+      </div><!-- .post-share -->
+    </div><!-- .col -->
+
+    <div class="col-12 col-lg-8">
+      <div class="post-comments-wrap">
+        <div class="post-comments">
+          <h3 class="comments-title"><span class="comments-number">Отзывов {{ratings.total}}</span></h3>
+          <ol class="comment-list">
+            <li class="comment" *ngFor="let comment of professor.ratings">
+              <article class="comment-body">
+                <div class="comment-wrap">
+                  <div class="comment-header">
+                    <span *ngFor="let star of range(comment.value)" class="fa fa-star checked little-star"></span>
+                    <span *ngFor="let missed of range(5-comment.value)" class="fa fa-star little-star"></span>
+                    <span class="posted-date">{{convertDate(comment.created_at) | date: 'longDate'}}</span>
+                  </div><!-- .comment-author -->
+                  <p>{{comment.review}}</p>
+                </div><!-- .comment-wrap -->
+
+                <div class="clearfix"></div>
+              </article><!-- .comment-body -->
+            </li><!-- .comment -->
+
+          </ol><!-- .comment-list -->
+        </div><!-- .post-comments -->
+
+        <div class="comments-form">
+          <div class="comment-respond">
+            <h3 class="comment-reply-title">Оставить отзыв</h3>
+            <div class="comment-form">
+              <div class="row">
+                <div class="col-8">
+                  <input type="email" placeholder="Email" [(ngModel)]="comment.email"/>
+                </div>
+                <div class="col-4 right">
+                  <fieldset class="rating">
+                    <input [(ngModel)]="comment.value" type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                    <input [(ngModel)]="comment.value" type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                    <input [(ngModel)]="comment.value" type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                    <input [(ngModel)]="comment.value" type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                    <input [(ngModel)]="comment.value" type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                  </fieldset>
+                </div>
+              </div>
+              <textarea rows="4" placeholder="Ваш отзыв" [(ngModel)]="comment.review"></textarea>
+              <button class="submit" (click)="addComment()">Отправить отзыв</button>
+            </div><!-- .comment-form -->
+          </div><!-- .comment-respond -->
+        </div><!-- .comments-form -->
+      </div><!-- .post-comments-wrap -->
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

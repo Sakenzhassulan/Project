@@ -1,0 +1,129 @@
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+
+.heading {
+  font-size: 25px;
+  margin-right: 25px;
+}
+
+.comment-header {
+  display: flex;
+}
+
+.comment-wrap {
+  margin-top: 10px;
+}
+
+.posted-date {
+  margin-left: 10px;
+  color: #34d986;
+}
+
+.professor-avatar img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.professor-info-list {
+  padding-left: 5px;
+  list-style-type: circle !important;
+}
+
+.professor-info-list li {
+  display: block;
+}
+
+.fa {
+  font-size: 25px;
+}
+
+.checked {
+  color: orange;
+}
+
+/* Three column layout */
+.side {
+  float: left;
+  width: 15%;
+  margin-top:10px;
+}
+
+.middle {
+  margin-top:10px;
+  float: left;
+  width: 70%;
+}
+
+/* Place text to the right */
+.right {
+  text-align: right;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* The bar container */
+.bar-container {
+  width: 100%;
+  background-color: #f1f1f1;
+  text-align: center;
+  color: white;
+}
+
+/* Individual bars */
+.bar-5 {width: var(--width); height: 18px; background-color: #4CAF50;}
+.bar-4 {width: var(--width); height: 18px; background-color: #2196F3;}
+.bar-3 {width: var(--width); height: 18px; background-color: #00bcd4;}
+.bar-2 {width: var(--width); height: 18px; background-color: #ff9800;}
+.bar-1 {width: var(--width); height: 18px; background-color: #f44336;}
+
+/* Responsive layout - make the columns stack on top of each other instead of next to each other */
+@media (max-width: 400px) {
+  .side, .middle {
+    width: 100%;
+  }
+  .right {
+    display: none;
+  }
+}
+
+.little-star {
+  font-size: 15px;
+}
+
+fieldset, label { margin: 0; padding: 0; }
+
+.rating {
+  border: none;
+  float: left;
+}
+
+.rating > input { display: none; }
+.rating > label:before {
+  margin: 5px;
+  font-size: 32px;
+  font-family: FontAwesome, serif;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > label {
+  padding-top: 15px;
+  color: #ddd;
+  float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
