@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -18,6 +18,9 @@ import { MainComponent } from './main/main.component';
 import { SubHeaderComponent } from './sub-header/sub-header.component';
 import { ProfessorDetailComponent } from './professor-detail/professor-detail.component';
 import {FormsModule} from '@angular/forms';
+import { LogInComponent } from './log-in/log-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import {AuthInterceptor} from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import {FormsModule} from '@angular/forms';
     ProfessorsComponent,
     MainComponent,
     SubHeaderComponent,
-    ProfessorDetailComponent
+    ProfessorDetailComponent,
+    LogInComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,13 @@ import {FormsModule} from '@angular/forms';
     HttpClientModule,
     FormsModule,
   ],
-  providers: [LazyLoadScriptService],
+  providers: [LazyLoadScriptService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

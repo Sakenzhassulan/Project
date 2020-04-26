@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ApiService} from '../api.service';
+import {University} from '../university';
 
 @Component({
   selector: 'app-universities',
@@ -8,7 +9,7 @@ import {ApiService} from '../api.service';
 })
 export class UniversitiesComponent implements OnInit {
 
-  universities: any;
+  universities: University;
 
   ngOnInit(): void {
     this.getUniversities();

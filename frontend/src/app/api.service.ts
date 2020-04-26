@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import {Comment} from './comment';
+import {University} from './university';
 
 
 @Injectable({
@@ -21,7 +22,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getAllUniversities(): Observable<any> {
+  getAllUniversities(): Observable<University> {
     return this.http.get(this.baseUrl + '/api/universities/',
       {headers: this.httpHeaders})
       .pipe(

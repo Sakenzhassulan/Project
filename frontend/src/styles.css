@@ -1221,7 +1221,7 @@ a.btn:hover {
   width: 32px;
   height: 38px;
   border: 1px solid #ebebeb;
-  color: #757686;
+  color: #757686 !important;
   text-decoration: none;
 }
 
@@ -1231,14 +1231,15 @@ a.btn:hover {
 
 .pagination ul li:hover a,
 .pagination ul li.active a {
-  border-color: transparent;
-  background: #19c880;
+  border-color: transparent !important;
+  background: #19c880 !important;
 }
 
 .pagination ul li:hover a,
 .pagination ul li.active a,
 .pagination ul li:hover a .fa {
-  color: #fff;
+  color: #fff !important;
+  cursor: pointer;
 }
 
 .pagination-results {
@@ -1249,6 +1250,7 @@ a.btn:hover {
   padding: 6px 10px;
   margin-left: 32px;
   border: 1px solid #ebebeb;
+  cursor: pointer !important;
 }
 
 /*--------------------------------------------------------------

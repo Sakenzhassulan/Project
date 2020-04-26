@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ApiService} from '../api.service';
 
 @Component({
@@ -10,6 +10,10 @@ export class ProfessorsComponent implements OnInit {
   professors;
   universities;
   search = '';
+  limit = 6;
+  offset = 0;
+  allProfessors;
+  @Input() universityId = -1;
 
   constructor(
     private apiService: ApiService
@@ -18,10 +22,12 @@ export class ProfessorsComponent implements OnInit {
   ngOnInit(): void {
     this.getProfessors();
     this.getUniversities();
+    this.limit = 6;
+    this.offset = 0;
   }
 
   getProfessors() {
-    this.apiService.getProfessors().subscribe(professors => this.professors = professors);
+    this.apiService.getProfessors().subscribe(professors => {this.allProfessors = professors; this.professors = professors; });
   }
 
   toStringJoin(data) {
@@ -32,12 +38,27 @@ export class ProfessorsComponent implements OnInit {
     this.apiService.getAllUniversities().subscribe(universities => this.universities = universities);
   }
 
-  getProfessorsByUniversity(universityId) {
-    this.apiService.getProfessorsByUniversity(universityId).subscribe(professors => this.professors = professors);
+  getProfessorsByUniversity(universityId: any) {
+    this.apiService.getProfessorsByUniversity(universityId)
+      .subscribe(professors => {this.allProfessors = professors; this.professors = professors; });
   }
 
   getProfessorByName() {
-    console.log(this.search);
-    this.apiService.getProfessorByName(this.search).subscribe(professors => this.professors = professors);
+    this.apiService.getProfessorByName(this.search)
+      .subscribe(professors => {this.allProfessors = professors; this.professors = professors; });
+  }
+
+  paginate() {
+    this.professors = this.allProfessors.slice(this.offset, this.offset + this.limit + 1);
+  }
+
+  next() {
+    this.offset = Math.min(this.offset + this.limit, this.allProfessors.length);
+    this.paginate();
+  }
+
+  prev() {
+    this.offset = Math.max(0, this.offset - this.limit);
+    this.paginate();
   }
 }
